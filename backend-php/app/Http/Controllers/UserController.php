@@ -54,16 +54,52 @@ class UserController extends Controller
         return $tmpUsers;
     }
 
-    public function getUser() {
+    public function getUser($id) {
+        $user = new User;
+        $user = $user::where("id", "=", $id)->first();
+        if (!isset($user) || empty($user)) {
+            $user = '{}';
+        }
 
+        return $user;
     }
 
-    public function updateUser() {
+    public function updateUser($id, Request $req) {
+        if (!isset($id) || empty($id)) {
+            return ' { "status" : "bad" } ';
+        }
 
+        try {
+            $validated = $req->validate([
+                'userName' => 'required',
+            ]);
+
+            $formData = $req->collect();
+            $prepare_user = new User;
+            $prepare_user = $prepare_user::where("id", "=", $id)->first();
+            if (isset($prepare_user)) {
+                if ( isset($formData["userName"]) && !empty($formData["userName"]) ) {
+                    $prepare_user->userName = $formData["userName"];
+                }
+    
+                $prepare_user->save();
+            }
+
+        } catch (ValidationException $e) {
+            echo $e;
+        }
+
+
+        return '{ "status": "ok" }';
     }
 
-    public function deleteUser() {
+    public function deleteUser($id, Request $req) {
+        $objId = new ObjectId($id);
+        $prepare_user = new User();
+        $user = $prepare_user::where("_id", "=", $objId)->first();
+        $user->delete();
 
+        return '{ "status": "ok" }';
     }
 
 }

@@ -16,12 +16,6 @@ Route::prefix('tasks')->group(function () {
     Route::get('/{id}',      [TaskController::class, 'getTask']);
     Route::put('/{id}',      [TaskController::class, 'updateTask']);
     Route::delete('/{id}',   [TaskController::class, 'deleteTask']);
-
-    // Route::post('/',            [BookController::class, 'CreateABook']);
-    // Route::get('/',             [BookController::class, 'GetAllBooks']);
-    // Route::get('/{bookId}',     [BookController::class, 'GetOneBook']);
-    // Route::put('/{bookId}',     [BookController::class, 'UpdateABook']);
-    // Route::delete('/{bookId}',  [BookController::class, 'DeleteABook']);
 });
 
 Route::prefix('users')->group(function () {
@@ -29,7 +23,7 @@ Route::prefix('users')->group(function () {
     Route::post('/',    [UserController::class, 'createUser']);
     Route::get('/',     [UserController::class, 'getAllUsers']);
     Route::get('/ids',  [UserController::class, 'getIdUsers']);
-    // Route::get('/{id}', [UserController::class, 'getTask']);
-    // Route::put('/{id}', [UserController::class, 'updateTask']);
-    // Route::delete('/{id}', [UserController::class, 'deleteTask']);
+    Route::get('/{id}', [UserController::class, 'getUser']);
+    Route::put('/{id}', [UserController::class, 'updateUser']);
+    Route::delete('/{id}', [UserController::class, 'deleteUser']);
 });
